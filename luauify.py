@@ -1,4 +1,4 @@
-# i dont even know python i made this with only luau knowledge so dont bully me if its bad :C
+# idek python i made this with only luau knowledge so dont bully me if its bad :C
 
 from random import random, randint, seed
 from math import ceil, floor
@@ -8,6 +8,9 @@ tostring = str
 pairs = enumerate
 tonumber = int # rewrite this
 end = (lambda: None)()
+
+type table = list | dict
+type number = float | int
 
 def error(message: str):
     raise Exception(message)
@@ -21,7 +24,7 @@ def pcall(func, *args):
 class math:
     huge = float("inf")
     @stc
-    def random(m: int | None=None, n: int | None=None) -> float | int:
+    def random(m: number | None=None, n: number | None=None) -> float | int:
         if m is None and n is None:
             return random()
         elif n is None:
@@ -29,13 +32,13 @@ class math:
         else:
             return randint(m, n) # idk if this uses the same rng as luau math.random
     @stc
-    def randomseed(x: int | float) -> None:
+    def randomseed(x: number) -> None:
         return seed(x)
     @stc
-    def ceil(x: float) -> int:
+    def ceil(x: float) -> number:
         return ceil(x)
     @stc
-    def floor(x: float) -> int:
+    def floor(x: float) -> number:
         return floor(x)
     @stc
     def max(*args: int | float) -> int | float:
@@ -49,7 +52,7 @@ class table:
     def insert(t: list, v) -> None:
         t.append(v)
     @stc
-    def remove(t: list | dict | tuple, pos: int | None = None):
+    def remove(t: list | dict | tuple, pos: number | None = None):
         if pos is None:
             return t.pop()
         else:
@@ -57,13 +60,13 @@ class table:
         
 class string:
     @stc
-    def len(string: str) -> int:
+    def len(string: str) -> number:
         return len(string)
     @stc
     def reverse(string: str) -> str:
         return string[::-1]
     @stc
-    def rep(string: str, repetitions: int) -> str:
+    def rep(string: str, repetitions: number) -> str:
         return string * repetitions
     @stc
     def upper(string: str) -> str:
