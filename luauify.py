@@ -1,7 +1,7 @@
 # idek python i made this with only luau knowledge so dont bully me if its bad :C
 
 from random import random, randint, seed
-from math import ceil, floor
+from math import ceil, floor, pi
 stc = staticmethod
 
 type table = list | tuple
@@ -24,6 +24,7 @@ def tonumber(value: str, base: number = 10) -> number: # no hexadecimal support 
             return print("wtf is wrong with you")
     else:
         return None
+    end
 end
 
 def error(message: str):
@@ -35,10 +36,12 @@ def pcall(func, *args):
         return True, func(*args)
     except Exception as e:
         return False, e
+    end
 end
     
 class math:
     huge = float("inf")
+    pi = pi
     @stc
     def random(m: int | None=None, n: int | None=None) -> float | int:
         if m is None and n is None:
@@ -47,6 +50,16 @@ class math:
             return randint(1, m)
         else:
             return randint(m, n) # idk if this uses the same rng as luau math.random
+    @stc
+    def pow(x: number, y: number) -> number:
+        return x ** y
+    end
+    @stc
+    def sqrt(x: number) -> number:
+        return x**(1/2)
+    @stc
+    def rad(x: number) -> number:
+        return x * (math.pi / 180)
     @stc
     def randomseed(x: number) -> None:
         return seed(x)
@@ -62,9 +75,12 @@ class math:
     @stc
     def min(*args: int | float) -> int | float:
         return min(*args)
+    @stc
+    def abs(x: number) -> number:
+        return abs(x)
     end
 end
-    
+
 class table:
     @stc
     def insert(t: table, v) -> None:
@@ -78,10 +94,20 @@ class table:
     @stc
     def sort(t: table):
         return sorted(t)
+    @stc
+    def create(count: number, v: any=None):
+        return [v] * count
+    @stc
+    def clone(t: table) -> table:
+        if isinstance(t, (dict, set)):
+            return t.copy()
+        elif isinstance(t, list):
+            return t[:]
+        else:
+            return t
     end
 end
 
-        
 class string:
     @stc
     def len(string: str) -> number:
@@ -89,6 +115,9 @@ class string:
     @stc
     def reverse(string: str) -> str:
         return string[::-1]
+    @str
+    def format(string: str, *args) -> str:
+        return string % args
     @stc
     def rep(string: str, repetitions: number) -> str:
         return string * repetitions
@@ -109,11 +138,9 @@ end
 examples
 math.random(1,10)
 
-table.insert(table, value)
-
 string.split("loool | im | fat", "|")[2] <-- returns fat
 
-pcall(unsafefunc())
+s,e = pcall(unsafefunc())
 
 for i,v in pairs():
   print(i,v)
