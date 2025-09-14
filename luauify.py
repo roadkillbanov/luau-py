@@ -4,27 +4,43 @@ from random import random, randint, seed
 from math import ceil, floor
 stc = staticmethod
 
+type table = list | tuple
+type number = float | int
+
 tostring = str
-pairs = enumerate
-tonumber = int # rewrite this
+pairs = enumerate # rewrite to ipairs
 end = (lambda: None)()
 
-type table = list | dict
-type number = float | int
+def tonumber(value: str, base: number = 10) -> number: # no hexadecimal support obviously
+    if isinstance(value, (int, float)):
+        return print("are you dumb?")
+    elif isinstance(value, str):
+        try:
+            if base == 10 and value.count('.') > 0:
+                return float(value)
+            else:
+                return int(value, base)
+        except ValueError:
+            return print("wtf is wrong with you")
+    else:
+        return None
+end
 
 def error(message: str):
     raise Exception(message)
+end
 
 def pcall(func, *args):
     try:
         return True, func(*args)
     except Exception as e:
         return False, e
+end
     
 class math:
     huge = float("inf")
     @stc
-    def random(m: number | None=None, n: number | None=None) -> float | int:
+    def random(m: int | None=None, n: int | None=None) -> float | int:
         if m is None and n is None:
             return random()
         elif n is None:
@@ -46,10 +62,12 @@ class math:
     @stc
     def min(*args: int | float) -> int | float:
         return min(*args)
+    end
+end
     
 class table:
     @stc
-    def insert(t: list, v) -> None:
+    def insert(t: table, v) -> None:
         t.append(v)
     @stc
     def remove(t: list | dict | tuple, pos: number | None = None):
@@ -57,6 +75,12 @@ class table:
             return t.pop()
         else:
             return t.pop(pos)
+    @stc
+    def sort(t: table):
+        return sorted(t)
+    end
+end
+
         
 class string:
     @stc
@@ -74,6 +98,11 @@ class string:
     @stc
     def lower(string: str) -> str:
         return string.lower()
+    def split(string: str, seperator: str) -> list[str]:
+        parts = string.split(seperator)
+        return parts
+    end
+end
 
 '''
 examples
@@ -81,7 +110,7 @@ math.random(1,10)
 
 table.insert(table, value)
 
-string.len("abcd")
+string.split("loool | im | fat", "|")[2] <-- returns fat
 
 pcall(unsafefunc())
 
