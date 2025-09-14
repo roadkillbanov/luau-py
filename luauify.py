@@ -98,6 +98,7 @@ class string:
     @stc
     def lower(string: str) -> str:
         return string.lower()
+    @stc
     def split(string: str, seperator: str) -> list[str]:
         parts = string.split(seperator)
         return parts
