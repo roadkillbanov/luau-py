@@ -31,9 +31,9 @@ def error(message: str):
     raise Exception(message)
 end
 
-def pcall(func, *args):
+def pcall(func, *args, **kwargs):
     try:
-        return True, func(*args)
+        return True, func(*args, **kwargs)
     except Exception as e:
         return False, e
     end
