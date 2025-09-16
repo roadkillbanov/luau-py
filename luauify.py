@@ -1,20 +1,28 @@
 # idek python i made this with only luau knowledge so dont bully me if its bad :C
 
+
+# globals
 from random import random, randint, seed
 from math import ceil, floor, pi
+from time import sleep
+import types
 stc = staticmethod
 
 type table = list | tuple
+type string = str
+type boolean = bool
 type number = float | int
 
 tostring = str
 pairs = enumerate # rewrite to ipairs
 end = (lambda: None)()
 
-def tonumber(value: str, base: number = 10) -> number: # no hexadecimal support obviously
+
+# functions
+def tonumber(value: string, base: number = 10) -> number: # no hexadecimal support obviously
     if isinstance(value, (int, float)):
         return print("are you dumb?")
-    elif isinstance(value, str):
+    elif isinstance(value, string):
         try:
             if base == 10 and value.count('.') > 0:
                 return float(value)
@@ -27,7 +35,30 @@ def tonumber(value: str, base: number = 10) -> number: # no hexadecimal support 
     end
 end
 
-def error(message: str):
+def typeof(value):
+    if value is None:
+        return "nil"
+    
+    if isinstance(value, bool):
+        return "boolean"
+    
+    if isinstance(value, (int, float)):
+        return "number"
+    
+    if isinstance(value, str):
+        return "string"
+    
+    if isinstance(value, (list, tuple, dict, set)):
+        return "table"
+
+    if isinstance(value, (types.FunctionType, types.LambdaType, types.MethodType, types.BuiltinFunctionType, types.BuiltinMethodType)):
+        return "function"
+    
+    # add threads, userdata, buffer, vector, maybe instance
+    return None
+end
+
+def error(message: string):
     raise Exception(message)
 end
 
@@ -39,6 +70,8 @@ def pcall(func, *args, **kwargs):
     end
 end
     
+
+# classes
 class math:
     huge = float("inf")
     pi = pi
@@ -110,39 +143,48 @@ end
 
 class string:
     @stc
-    def len(string: str) -> number:
+    def len(string: string) -> number:
         return len(string)
     @stc
-    def reverse(string: str) -> str:
+    def reverse(string: string) -> string:
         return string[::-1]
     @str
-    def format(string: str, *args) -> str:
+    def format(string: string, *args) -> string:
         return string % args
     @stc
-    def rep(string: str, repetitions: number) -> str:
+    def rep(string: string, repetitions: number) -> string:
         return string * repetitions
     @stc
-    def upper(string: str) -> str:
+    def upper(string: string) -> string:
         return string.upper()
     @stc
-    def lower(string: str) -> str:
+    def lower(string: string) -> string:
         return string.lower()
     @stc
-    def split(string: str, seperator: str) -> list[str]:
+    def split(string: string, seperator: string) -> list[string]:
         parts = string.split(seperator)
         return parts
     end
 end
 
+class task:
+    @stc
+    def wait(x): 
+        sleep(x)
+
 '''
 examples
 math.random(1,10)
 
+table.insert(table, value)
+
 string.split("loool | im | fat", "|")[2] <-- returns fat
 
-s,e = pcall(unsafefunc())
+pcall(unsafefunc())
 
 for i,v in pairs():
   print(i,v)
 end <-- purely visual
+
+task.wait(1/5)
 '''
